@@ -252,14 +252,19 @@ tr.sub-row td:first-child { padding-left: 28px; }
         <td>项目说明文档（偏技术向），同时是 GitHub 仓库首页展示的内容。</td>
       </tr>
       <tr>
+        <td><span class="name">02-项目源码/</span></td>
+        <td><span class="kind code">源码目录</span></td>
+        <td>★ 所有代码、测试、运行数据都在这个文件夹里（展开见下表）。</td>
+      </tr>
+      <tr class="sub-row">
         <td><span class="name">app.py</span></td>
         <td><span class="kind code">代码</span></td>
-        <td>★ 程序入口：双击 01 后实际执行的就是它，负责创建应用并启动服务。</td>
+        <td>程序入口：双击 01 后实际执行的就是它，负责创建应用并启动服务。</td>
       </tr>
-      <tr>
+      <tr class="sub-row">
         <td><span class="name">blog/</span></td>
         <td><span class="kind code">代码包</span></td>
-        <td>★ 全部核心代码都在这个文件夹里（展开见下表）。</td>
+        <td>★ 核心代码都在这个文件夹里（展开见下方细行）。</td>
       </tr>
       <tr class="sub-row"><td><span class="name">blog/__init__.py</span></td><td><span class="kind code">代码</span></td><td>应用工厂：创建应用、装配各模块、注册错误页。</td></tr>
       <tr class="sub-row"><td><span class="name">blog/models.py</span></td><td><span class="kind code">代码</span></td><td>数据访问层：建表、初始化演示数据、文章增删改查（原生 SQL）。</td></tr>
@@ -267,42 +272,48 @@ tr.sub-row td:first-child { padding-left: 28px; }
       <tr class="sub-row"><td><span class="name">blog/admin_views.py</span></td><td><span class="kind code">代码</span></td><td>后台路由：登录鉴权 + 文章管理，所有写操作都要先登录。</td></tr>
       <tr class="sub-row"><td><span class="name">blog/templates/</span></td><td><span class="kind code">模板</span></td><td>10 个前台页面模板 + 3 个后台页面模板（Jinja2 / HTML）。</td></tr>
       <tr class="sub-row"><td><span class="name">blog/static/</span></td><td><span class="kind code">样式</span></td><td>全站样式 style.css 与代码高亮主题 syntax.css。</td></tr>
-      <tr>
+      <tr class="sub-row">
         <td><span class="name">tests/</span></td>
         <td><span class="kind">测试</span></td>
         <td>★ 14 个自动化单元测试：覆盖前台展示、草稿隔离、登录鉴权、增删改查。</td>
       </tr>
-      <tr>
+      <tr class="sub-row">
         <td><span class="name">instance/</span></td>
         <td><span class="kind">运行数据</span></td>
         <td>运行后自动生成的数据库文件。可整个删掉，下次启动会自动重建。</td>
       </tr>
-      <tr>
+      <tr class="sub-row">
         <td><span class="name">requirements.txt</span></td>
         <td><span class="kind">配置</span></td>
         <td>依赖清单：告诉 pip 需要安装哪几个库（仅 3 个）。</td>
       </tr>
-      <tr>
-        <td><span class="name">.git/  .gitignore</span></td>
-        <td><span class="kind">版本管理</span></td>
-        <td>Git 仓库相关，验收可忽略。代码托管在 GitHub。</td>
+      <tr class="sub-row">
+        <td><span class="name">.gitignore</span></td>
+        <td><span class="kind">配置</span></td>
+        <td>Git 忽略规则（忽略数据库、缓存等），验收可忽略。</td>
       </tr>
-      <tr>
+      <tr class="sub-row">
         <td><span class="name">.venv/</span></td>
         <td><span class="kind">环境</span></td>
         <td>Python 虚拟环境（开发时创建，如存在可忽略，不影响双击运行）。</td>
       </tr>
+      <tr>
+        <td><span class="name">.git/</span></td>
+        <td><span class="kind">版本管理</span></td>
+        <td>Git 仓库本体（隐藏文件夹），验收可忽略。代码托管在 GitHub。</td>
+      </tr>
     </table>
     <div class="tip">
       <b>记忆要点：</b>看说明翻 <b>00</b>，要运行点 <b>01</b>，
-      看代码进 <b>blog/</b>，跑测试用 <b>tests/</b>，其余都可忽略。
+      看代码进 <b>02-项目源码/blog/</b>，跑测试在 <b>02-项目源码/</b> 里，
+      根目录其余都可忽略。
     </div>
   </section>
 
   <!-- ④ 测试 -->
   <section>
     <h2><span class="num">4</span>如何验证质量？（运行测试）</h2>
-    <p class="sub">在本文件夹打开命令行（地址栏输入 cmd 回车），执行：</p>
+    <p class="sub">进入 <b>02-项目源码</b> 文件夹打开命令行（地址栏输入 cmd 回车），执行：</p>
 <pre><code>python -m unittest discover -s tests -t . -v</code></pre>
     <div class="tip">
       <b>预期结果：</b>结尾显示 <b>Ran 14 tests</b> 和 <b>OK</b>，
@@ -320,7 +331,7 @@ tr.sub-row td:first-child { padding-left: 28px; }
     </div>
     <div class="faq">
       <b>Q：依赖安装很慢或失败？</b>
-      <span>手动执行：<code>pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple</code>
+      <span>在 02-项目源码 目录内手动执行：<code>pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple</code>
       ，完成后重新双击 01。</span>
     </div>
     <div class="faq">
@@ -343,8 +354,8 @@ tr.sub-row td:first-child { padding-left: 28px; }
       <tr><td>双击即可运行</td><td><span class="file-btn">01-【双击开始】.bat</span></td></tr>
       <tr><td>图文使用说明</td><td><span class="file-btn">00-【必读】从这里开始.html</span>（本页）</td></tr>
       <tr><td>设计 / 实现文档</td><td><span class="name">README.md</span>（含技术要点与配置项）</td></tr>
-      <tr><td>核心源码</td><td><span class="name">app.py</span> + <span class="name">blog/</span></td></tr>
-      <tr><td>自动化测试</td><td><span class="name">tests/</span>（14 项，命令见第 4 节）</td></tr>
+      <tr><td>核心源码</td><td><span class="name">02-项目源码/</span>（app.py + blog/ + tests/）</td></tr>
+      <tr><td>自动化测试</td><td><span class="name">02-项目源码/tests/</span>（14 项，命令见第 4 节）</td></tr>
       <tr><td>在线源码仓库</td><td><a href="https://github.com/2683260082/flask-blog">github.com/2683260082/flask-blog</a></td></tr>
     </table>
   </section>

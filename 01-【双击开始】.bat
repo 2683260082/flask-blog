@@ -10,8 +10,16 @@ rem ============================================================
 rem 切换到本脚本所在目录, 保证从任何位置双击都能正常找到文件
 cd /d "%~dp0"
 
-rem 程序入口就在本目录下的 app.py
-if not exist "app.py" goto :src_missing
+rem 源码放在 02-项目源码 子目录中, 进入后才能执行 "%PY%" app.py
+set "SRCDIR=02-项目源码"
+if not exist "%SRCDIR%\app.py" goto :src_missing
+
+rem 进入源码目录, 后续所有命令都在这里执行
+cd /d "%SRCDIR%"
+
+rem 优先使用项目自带虚拟环境; 没有则回退到系统 Python (自动安装依赖)
+set "PY=python"
+if exist ".venv\Scripts\python.exe" set "PY=.venv\Scripts\python.exe"
 
 echo.
 echo  ====================================================
@@ -20,11 +28,11 @@ echo  ====================================================
 echo.
 
 rem --- 检查 Python 是否可用 ---
-python --version >nul 2>&1
+"%PY%" --version >nul 2>&1
 if errorlevel 1 goto :no_python
 
 rem --- 检查依赖是否已安装 (Flask + Markdown + Pygments) ---
-python -c "import flask, markdown, pygments" >nul 2>&1
+"%PY%" -c "import flask, markdown, pygments" >nul 2>&1
 if errorlevel 1 goto :no_deps
 
 echo  [1/3] 环境检查通过
@@ -45,15 +53,15 @@ rem 之所以不直接 start: 服务尚未就绪时会连接失败。
 start "auto-open-browser" cmd /c "ping -n 6 127.0.0.1 >nul && start http://127.0.0.1:5000"
 
 rem 在当前窗口启动服务。关闭本窗口或按 Ctrl+C 即停止服务。
-python app.py
+"%PY%" app.py
 goto :end
 
 rem --- 程序入口缺失(文件夹被改名或移动) ---
 :src_missing
 echo.
-echo  [错误] 找不到程序入口 app.py。
+echo  [错误] 找不到源码目录 "%SRCDIR%"。
 echo.
-echo  请确认本 .bat 文件与 app.py 放在同一目录下,
+echo  请确认本文件与 "%SRCDIR%" 文件夹放在同一层目录下,
 echo  且不要单独复制本 .bat 文件到别处运行。
 echo.
 pause
@@ -77,7 +85,7 @@ rem --- 未安装依赖 ---
 echo  [1/3] 环境检查通过
 echo  [2/3] 未检测到项目依赖, 正在自动安装...
 echo.
-python -m pip install -r requirements.txt
+"%PY%" -m pip install -r requirements.txt
 if errorlevel 1 goto :install_failed
 echo.
 echo  依赖安装完成, 正在启动服务...
@@ -91,7 +99,7 @@ echo   浏览器约 5 秒后自动打开前台
 echo  ----------------------------------------------------
 echo.
 start "auto-open-browser" cmd /c "ping -n 6 127.0.0.1 >nul && start http://127.0.0.1:5000"
-python app.py
+"%PY%" app.py
 goto :end
 
 rem --- 依赖安装失败 ---

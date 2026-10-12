@@ -14,17 +14,22 @@
 
 ```
 flask-blog/
-├── app.py              # 启动入口: python app.py
-├── blog/               # 应用包 (全部业务代码)
-│   ├── __init__.py     # 应用工厂、Markdown 过滤器、蓝图装配
-│   ├── models.py       # 数据访问层 (建表、种子、文章 CRUD)
-│   ├── views.py        # 前台蓝图 (首页/详情/标签/归档/RSS)
-│   ├── admin_views.py  # 后台蓝图 (登录、文章管理)
-│   ├── templates/      # 页面模板 (含 admin/ 子目录)
-│   └── static/         # 全站样式 + Pygments 高亮主题
-├── tests/              # 单元测试
-├── instance/           # 运行时数据库 (自动生成, 不入库)
-└── requirements.txt
+├── 00-【必读】从这里开始.html    # 图文使用说明（验收入口）
+├── 01-【双击开始】.bat           # 一键启动脚本
+├── README.md                     # 本说明文档
+└── 02-项目源码/                  # 全部源码与运行数据
+    ├── app.py                    # 启动入口: python app.py
+    ├── blog/                     # 应用包 (全部业务代码)
+    │   ├── __init__.py           # 应用工厂、Markdown 过滤器、蓝图装配
+    │   ├── models.py             # 数据访问层 (建表、种子、文章 CRUD)
+    │   ├── views.py              # 前台蓝图 (首页/详情/标签/归档/RSS)
+    │   ├── admin_views.py        # 后台蓝图 (登录、文章管理)
+    │   ├── templates/            # 页面模板 (含 admin/ 子目录)
+    │   └── static/               # 全站样式 + Pygments 高亮主题
+    ├── tests/                    # 单元测试
+    ├── instance/                 # 运行时数据库 (自动生成, 不入库)
+    ├── requirements.txt          # 依赖清单
+    └── .gitignore
 ```
 
 ## 快速开始
@@ -39,6 +44,7 @@ flask-blog/
 环境要求：Python 3.9+。
 
 ```bash
+cd 02-项目源码
 python -m venv .venv
 .venv\Scripts\activate        # Windows; Linux/macOS 用 source .venv/bin/activate
 pip install -r requirements.txt
@@ -54,7 +60,10 @@ python app.py
 
 ## 运行测试
 
+在 `02-项目源码` 目录内执行：
+
 ```bash
+cd 02-项目源码
 python -m unittest discover -s tests -t . -v
 ```
 
@@ -81,6 +90,7 @@ python -m unittest discover -s tests -t . -v
 生产部署时设置环境变量后使用 WSGI 服务器，例如：
 
 ```bash
+cd 02-项目源码
 set BLOG_SECRET_KEY=请换成随机值
 pip install waitress
 waitress-serve --port=8000 app:app

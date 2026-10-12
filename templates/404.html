@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}404 · 墨刊{% endblock %}
+
+{% block content %}
+<section class="error-page">
+  <p class="error-code">404</p>
+  <p class="error-text">这一页大概被借走还没有还回来。</p>
+  <p><a class="btn btn-primary" href="{{ url_for('front.index') }}">回到首页</a></p>
+</section>
+{% endblock %}

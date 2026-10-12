@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}关于 · 墨刊{% endblock %}
+
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">关于<span class="accent">。</span></h1>
+  <p class="page-sub">About this journal</p>
+</header>
+
+<div class="prose">
+  <p>
+    「墨刊」是一个用 Flask 手工搭建的个人博客——从数据模型、路由、
+    模板到样式，每一行都是自己写的，没有套用任何博客系统。
+  </p>
+
+  <h2>技术栈</h2>
+  <ul>
+    <li>后端：Flask（Blueprint 分层，前台 / 后台隔离）</li>
+    <li>存储：SQLite，SQL 直写，无 ORM</li>
+    <li>渲染：Python-Markdown + Pygments 代码高亮</li>
+    <li>前端：原生 HTML / CSS / 少量 JavaScript，无构建步骤</li>
+  </ul>
+
+  <h2>功能</h2>
+  <ul>
+    <li>Markdown 写作、标签体系、草稿与发布</li>
+    <li>管理后台（登录鉴权、文章增删改查）</li>
+    <li>阅读计数、上下篇导航、按年归档、RSS 订阅</li>
+    <li>深浅色模式切换，遵循 prefers-reduced-motion</li>
+  </ul>
+
+  <h2>联系</h2>
+  <p>
+    源码托管在
+    <a href="https://github.com/2683260082">GitHub</a>，
+    欢迎通过 Issue 交流。
+  </p>
+</div>
+{% endblock %}

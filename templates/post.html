@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} · 墨刊{% endblock %}
+
+{% block content %}
+<article class="article">
+  <p class="article-kicker">
+    <time datetime="{{ post.created_at }}">{{ post.created_at[:10] }}</time>
+    <span aria-hidden="true">·</span>
+    <span>阅 {{ post.views }}</span>
+    {% if post.status == 'draft' %}
+      <span class="badge draft">草稿</span>
+    {% endif %}
+  </p>
+  <h1 class="article-title">{{ post.title }}</h1>
+  {% if post.tag_list %}
+    <div class="article-tags">
+      {% for t in post.tag_list %}
+        <a class="tag-chip" href="{{ url_for('front.tag_detail', tag=t) }}"># {{ t }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="article-content">
+    {{ post.content | markdown }}
+  </div>
+
+  <nav class="article-nav" aria-label="上下篇">
+    {% if prev_post %}
+      <a class="cell prev" href="{{ url_for('front.post_detail', post_id=prev_post.id) }}">
+        <span class="dir">← 较新一篇</span>
+        <span class="t">{{ prev_post.title }}</span>
+      </a>
+    {% else %}
+      <span class="cell prev empty" aria-hidden="true"></span>
+    {% endif %}
+    {% if next_post %}
+      <a class="cell next" href="{{ url_for('front.post_detail', post_id=next_post.id) }}">
+        <span class="dir">较早一篇 →</span>
+        <span class="t">{{ next_post.title }}</span>
+      </a>
+    {% else %}
+      <span class="cell next empty" aria-hidden="true"></span>
+    {% endif %}
+  </nav>
+</article>
+{% endblock %}

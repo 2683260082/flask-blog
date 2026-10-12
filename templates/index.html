@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}墨刊 · 个人博客{% endblock %}
+
+{% block content %}
+<section class="masthead">
+  <h1 class="masthead-title">墨刊<span class="dot">。</span></h1>
+  <p class="masthead-sub">Ink Journal · Est. 2026</p>
+  <p class="masthead-line">把读到的、想到的，钉在纸上。</p>
+</section>
+
+{% if posts %}
+  <ol class="timeline">
+    {% include "_entries.html" %}
+  </ol>
+
+  {% set pages = ((total + per_page - 1) // per_page) %}
+  {% if pages > 1 %}
+    <nav class="pager" aria-label="分页">
+      {% if page > 1 %}
+        <a href="{{ url_for('front.index', page=page - 1) }}">← 较新文章</a>
+      {% else %}
+        <span class="disabled">← 较新文章</span>
+      {% endif %}
+      <span class="page-of">{{ page }} / {{ pages }}</span>
+      {% if page < pages %}
+        <a href="{{ url_for('front.index', page=page + 1) }}">较早文章 →</a>
+      {% else %}
+        <span class="disabled">较早文章 →</span>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% else %}
+  <p class="empty-tip">还没有发表任何文章。</p>
+{% endif %}
+
+{% if tag_cloud %}
+  <section class="side-block" aria-label="标签云">
+    <h2 class="side-title">Tags</h2>
+    <div class="tag-cloud">
+      {% for name, count in tag_cloud %}
+        <a class="tag-chip" href="{{ url_for('front.tag_detail', tag=name) }}"># {{ name }} <span aria-hidden="true">{{ count }}</span><span class="visually-hidden">（{{ count }} 篇）</span></a>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}归档 · 墨刊{% endblock %}
+
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">归档<span class="accent">。</span></h1>
+  <p class="page-sub">按时间倒序陈列全部文章</p>
+</header>
+
+{% if groups %}
+  {% for year, posts in groups.items() %}
+    <h2 class="archive-year">{{ year }}</h2>
+    <ul class="archive-list">
+      {% for post in posts %}
+        <li>
+          <span class="adate">{{ post.created_at[5:10] }}</span>
+          <a href="{{ url_for('front.post_detail', post_id=post.id) }}">{{ post.title }}</a>
+          <span class="views">阅 {{ post.views }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+{% else %}
+  <p class="empty-tip">归档箱是空的。</p>
+{% endif %}
+{% endblock %}

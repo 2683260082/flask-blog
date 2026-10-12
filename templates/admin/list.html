@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}后台 · 墨刊{% endblock %}
+
+{% block content %}
+<div class="admin-bar">
+  <h1>文章管理</h1>
+  <a class="btn btn-primary" href="{{ url_for('admin.create') }}">＋ 新建文章</a>
+</div>
+
+{% if posts %}
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th scope="col">标题</th>
+        <th scope="col">状态</th>
+        <th scope="col" class="hide-m">标签</th>
+        <th scope="col" class="hide-m">更新时间</th>
+        <th scope="col">阅读</th>
+        <th scope="col" style="text-align:right">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+        <tr>
+          <td class="t-title">
+            <a href="{{ url_for('admin.edit', post_id=post.id) }}">{{ post.title }}</a>
+          </td>
+          <td>
+            <span class="badge{{ ' draft' if post.status == 'draft' else '' }}">
+              {{ '草稿' if post.status == 'draft' else '已发布' }}
+            </span>
+          </td>
+          <td class="hide-m">
+            {% for t in post.tag_list %}<span class="tag-chip"># {{ t }}</span> {% endfor %}
+          </td>
+          <td class="hide-m">{{ post.updated_at }}</td>
+          <td>{{ post.views }}</td>
+          <td class="actions">
+            {% if post.status == 'published' %}
+              <a class="btn btn-sm" href="{{ url_for('front.post_detail', post_id=post.id) }}">查看</a>
+            {% endif %}
+            <a class="btn btn-sm" href="{{ url_for('admin.edit', post_id=post.id) }}">编辑</a>
+            <form method="post" action="{{ url_for('admin.delete', post_id=post.id) }}"
+                  onsubmit="return confirm('确定删除《{{ post.title }}》？此操作不可恢复。')">
+              <button class="btn btn-sm btn-danger" type="submit">删除</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% set pages = ((total + per_page - 1) // per_page) %}
+  {% if pages > 1 %}
+    <nav class="pager" aria-label="分页">
+      {% if page > 1 %}
+        <a href="{{ url_for('admin.dashboard', page=page - 1) }}">← 上一页</a>
+      {% else %}
+        <span class="disabled">← 上一页</span>
+      {% endif %}
+      <span class="page-of">{{ page }} / {{ pages }}</span>
+      {% if page < pages %}
+        <a href="{{ url_for('admin.dashboard', page=page + 1) }}">下一页 →</a>
+      {% else %}
+        <span class="disabled">下一页 →</span>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% else %}
+  <p class="empty-tip">还没有任何文章，点右上角新建一篇吧。</p>
+{% endif %}
+{% endblock %}

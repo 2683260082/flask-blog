@@ -1,0 +1,20 @@
+{% for post in posts %}
+<li class="entry">
+  <div class="entry-date">
+    <span class="ym">{{ post.created_at[:4] }} · {{ post.created_at[5:7] }}</span>
+    <span class="day">{{ post.created_at[8:10] }}</span>
+  </div>
+  <div class="entry-body">
+    <h2 class="entry-title">
+      <a href="{{ url_for('front.post_detail', post_id=post.id) }}">{{ post.title }}</a>
+    </h2>
+    <p class="entry-summary">{{ post.summary }}</p>
+    <div class="entry-meta">
+      {% for t in post.tag_list %}
+        <a class="tag-chip" href="{{ url_for('front.tag_detail', tag=t) }}"># {{ t }}</a>
+      {% endfor %}
+      <span>阅 {{ post.views }}</span>
+    </div>
+  </div>
+</li>
+{% endfor %}

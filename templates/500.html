@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}500 · 墨刊{% endblock %}
+
+{% block content %}
+<section class="error-page">
+  <p class="error-code">500</p>
+  <p class="error-text">印刷机卡纸了，请稍后再试。</p>
+  <p><a class="btn btn-primary" href="{{ url_for('front.index') }}">回到首页</a></p>
+</section>
+{% endblock %}

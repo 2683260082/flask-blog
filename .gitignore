@@ -1,0 +1,21 @@
+# 虚拟环境
+.venv/
+venv/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+
+# 数据库（首次运行自动创建）
+blog.db
+
+# 测试与工具缓存
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 系统与编辑器
+Thumbs.db
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}标签 {{ tag }} · 墨刊{% endblock %}
+
+{% block content %}
+<header class="page-head">
+  <h1 class="page-title">标签 <span class="accent"># {{ tag }}</span></h1>
+  <p class="page-sub">共 {{ total }} 篇</p>
+</header>
+
+{% if posts %}
+  <ol class="timeline">
+    {% include "_entries.html" %}
+  </ol>
+
+  {% set pages = ((total + per_page - 1) // per_page) %}
+  {% if pages > 1 %}
+    <nav class="pager" aria-label="分页">
+      {% if page > 1 %}
+        <a href="{{ url_for('front.tag_detail', tag=tag, page=page - 1) }}">← 较新文章</a>
+      {% else %}
+        <span class="disabled">← 较新文章</span>
+      {% endif %}
+      <span class="page-of">{{ page }} / {{ pages }}</span>
+      {% if page < pages %}
+        <a href="{{ url_for('front.tag_detail', tag=tag, page=page + 1) }}">较早文章 →</a>
+      {% else %}
+        <span class="disabled">较早文章 →</span>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% else %}
+  <p class="empty-tip">该标签下还没有已发布的文章。</p>
+{% endif %}
+{% endblock %}

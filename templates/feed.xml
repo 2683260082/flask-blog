@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>墨刊</title>
+    <link>{{ url_for('front.index', _external=True) }}</link>
+    <description>墨刊 · 一个用 Flask 手工搭建的个人博客</description>
+    <language>zh-CN</language>
+    <lastBuildDate>{{ now_rfc822 }}</lastBuildDate>
+    {% for post in posts %}
+    <item>
+      <title>{{ post.title }}</title>
+      <link>{{ post.url }}</link>
+      <guid isPermaLink="true">{{ post.url }}</guid>
+      <pubDate>{{ post.pub_date }}</pubDate>
+      <description>{{ post.summary }}</description>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

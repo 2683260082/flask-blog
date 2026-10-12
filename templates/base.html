@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}墨刊{% endblock %}</title>
+  <meta name="description" content="墨刊 · 一个用 Flask 手工搭建的个人博客">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23B83A26'/%3E%3Ctext x='16' y='24' font-size='21' fill='%23F6F3EC' text-anchor='middle' font-family='SimSun,serif'%3E%E5%A2%A8%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/syntax.css') }}">
+  <link rel="alternate" type="application/rss+xml" title="墨刊 RSS" href="{{ url_for('front.feed') }}">
+  <script>
+    /* 主题预设: 避免深色模式切换时闪白 */
+    try {
+      var t = localStorage.getItem("theme");
+      if (t) document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="{{ url_for('front.index') }}">
+        <span class="seal" aria-hidden="true">墨</span>
+        <span class="brand-name">墨刊<span class="brand-sub">Ink Journal</span></span>
+      </a>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="{{ url_for('front.index') }}"{{ ' class="active"' if request.endpoint == 'front.index' else '' }}>首页</a>
+        <a href="{{ url_for('front.archive') }}"{{ ' class="active"' if request.endpoint == 'front.archive' else '' }}>归档</a>
+        <a href="{{ url_for('front.about') }}"{{ ' class="active"' if request.endpoint == 'front.about' else '' }}>关于</a>
+        {% if session.user %}
+          <a href="{{ url_for('admin.dashboard') }}"{{ ' class="active"' if request.endpoint and request.endpoint.startswith('admin.') and request.endpoint != 'admin.login' else '' }}>后台</a>
+          <form class="nav-form" method="post" action="{{ url_for('admin.logout') }}">
+            <button class="nav-btn" type="submit">退出</button>
+          </form>
+        {% else %}
+          <a href="{{ url_for('admin.login') }}">登录</a>
+        {% endif %}
+        <button class="nav-btn theme-toggle" type="button" id="theme-toggle" aria-label="切换深浅色模式">◐</button>
+      </nav>
+    </div>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container flash-wrap">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main class="container" id="content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© {{ now_year }} 墨刊 · 用 Flask 手工搭建</span>
+      <span>
+        <a href="{{ url_for('front.feed') }}">RSS</a>
+        ·
+        <a href="https://github.com/2683260082" rel="me">GitHub</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById("theme-toggle");
+      function paint() {
+        btn.textContent = document.documentElement.dataset.theme === "dark" ? "◑" : "◐";
+      }
+      paint();
+      btn.addEventListener("click", function () {
+        var next =
+          document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem("theme", next); } catch (e) {}
+        paint();
+      });
+    })();
+  </script>
+</body>
+</html>

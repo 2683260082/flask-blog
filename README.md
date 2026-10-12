@@ -14,19 +14,29 @@
 
 ```
 flask-blog/
-├── app.py            # 应用工厂、Markdown 过滤器、启动入口
-├── models.py         # 数据访问层 (建表、种子、文章 CRUD)
-├── views.py          # 前台蓝图 (首页/详情/标签/归档/RSS)
-├── admin_views.py    # 后台蓝图 (登录、文章管理, 全部要求鉴权)
-├── templates/        # Jinja2 模板 (含 admin/ 子目录)
-├── static/css/       # 全站样式 + Pygments 高亮主题
-├── tests/            # 单元测试
+├── app.py              # 启动入口: python app.py
+├── blog/               # 应用包 (全部业务代码)
+│   ├── __init__.py     # 应用工厂、Markdown 过滤器、蓝图装配
+│   ├── models.py       # 数据访问层 (建表、种子、文章 CRUD)
+│   ├── views.py        # 前台蓝图 (首页/详情/标签/归档/RSS)
+│   ├── admin_views.py  # 后台蓝图 (登录、文章管理)
+│   ├── templates/      # 页面模板 (含 admin/ 子目录)
+│   └── static/         # 全站样式 + Pygments 高亮主题
+├── tests/              # 单元测试
+├── instance/           # 运行时数据库 (自动生成, 不入库)
 └── requirements.txt
 ```
 
 ## 快速开始
 
-环境要求：Python 3.11（3.9+ 均可）。
+**方式一：双击启动（Windows，推荐验收使用）**
+
+双击根目录的 `01-【双击开始】.bat`，会自动检查环境、安装依赖并打开浏览器。
+完整图文说明（含目录导读、常见问题）见 `00-【必读】从这里开始.html`。
+
+**方式二：命令行**
+
+环境要求：Python 3.9+。
 
 ```bash
 python -m venv .venv
@@ -56,7 +66,7 @@ python -m unittest discover -s tests -t . -v
 | ------------------- | ------------------------------------------ | --------------- |
 | `BLOG_SECRET_KEY`   | 会话密钥，**生产环境必须设为随机值**       | 开发用固定值    |
 | `BLOG_ADMIN_PASSWORD` | 管理员初始密码（仅首次建库生效）         | `admin123`      |
-| `BLOG_DB`           | 数据库文件路径                             | 项目根目录      |
+| `BLOG_DB`           | 数据库文件路径                             | `instance/blog.db` |
 | `BLOG_SEED_POSTS`   | 置 `0` 时不写入演示文章                    | （写入演示文章）|
 
 ## 技术要点

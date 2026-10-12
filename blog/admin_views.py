@@ -10,7 +10,7 @@ from flask import (
     request, session, url_for,
 )
 
-import models
+from . import models
 
 bp = Blueprint("admin", __name__)
 

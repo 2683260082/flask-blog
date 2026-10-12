@@ -6,8 +6,8 @@ venv/
 __pycache__/
 *.py[cod]
 
-# 数据库（首次运行自动创建）
-blog.db
+# 运行时数据 (数据库)
+instance/
 
 # 测试与工具缓存
 .pytest_cache/

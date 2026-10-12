@@ -7,7 +7,7 @@ from flask import (
     Blueprint, abort, current_app, render_template, request, url_for,
 )
 
-import models
+from . import models
 
 bp = Blueprint("front", __name__)
 

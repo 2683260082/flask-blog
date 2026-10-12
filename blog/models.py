@@ -16,8 +16,11 @@ from flask import g
 from werkzeug.security import check_password_hash, generate_password_hash
 
 # 数据库文件路径: 环境变量可覆盖, 便于测试隔离
+# 默认位于 instance/blog.db —— 运行时数据与源码分离, 根目录更清爽
 DB_PATH = os.environ.get("BLOG_DB") or os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "blog.db"
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "instance",
+    "blog.db",
 )
 
 SCHEMA = """
@@ -219,6 +222,9 @@ LIMIT 10;
 
 def init_db():
     """建表 + 种子数据, 应用启动时执行; 重复执行是安全的"""
+    directory = os.path.dirname(DB_PATH)
+    if directory:
+        os.makedirs(directory, exist_ok=True)
     fresh = not os.path.exists(DB_PATH)
     db = sqlite3.connect(DB_PATH)
     try:

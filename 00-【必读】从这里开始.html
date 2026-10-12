@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>必读 · 从这里开始 —— 墨刊个人博客</title>
+<style>
+/* 与「墨刊」本身的配色保持一致, 让人一眼知道这是同一个项目 */
+:root {
+  --paper: #f6f3ec;
+  --panel: #fffdf8;
+  --ink: #1c1b18;
+  --muted: #57534a;
+  --line: #dcd5c6;
+  --seal: #b83a26;
+  --seal-dark: #96281a;
+  --seal-wash: #f7e9e4;
+  --ok: #16a34a;
+  --warn: #b45309;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 0 20px 60px;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  background: var(--paper); color: var(--ink); line-height: 1.75;
+}
+.wrap { max-width: 960px; margin: 0 auto; }
+
+/* 页头 */
+.hero {
+  background: var(--seal);
+  color: #f6f3ec; border-radius: 0 0 18px 18px;
+  padding: 38px 30px; margin: 0 -20px 28px;
+  text-align: center;
+}
+.hero h1 {
+  margin: 0 0 8px; font-size: 28px;
+  font-family: Georgia, "Songti SC", "SimSun", serif;
+  letter-spacing: 0.18em;
+}
+.hero p { margin: 0; opacity: .92; font-size: 15px; }
+.hero .badge {
+  display: inline-block; margin-top: 14px; padding: 4px 14px;
+  background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.4);
+  border-radius: 999px; font-size: 13px;
+}
+
+/* 通用区块 */
+section {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 14px; padding: 24px 26px; margin-bottom: 20px;
+}
+h2 {
+  font-size: 19px; margin: 0 0 4px;
+  display: flex; align-items: center; gap: 10px;
+  font-family: Georgia, "Songti SC", "SimSun", serif;
+}
+h2 .num {
+  background: var(--seal); color: #fff;
+  width: 26px; height: 26px; border-radius: 7px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 14px; flex: 0 0 auto;
+  font-family: inherit;
+}
+.sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
+h3 { font-size: 15px; margin: 22px 0 10px; color: var(--ink); }
+
+/* 提示条 */
+.tip {
+  background: var(--seal-wash); border: 1px solid #ecd2c9;
+  border-left: 4px solid var(--seal);
+  border-radius: 8px; padding: 12px 16px; font-size: 14px; margin: 14px 0;
+}
+.warn {
+  background: #fdf6e7; border: 1px solid #f3e2b3;
+  border-left: 4px solid var(--warn);
+  border-radius: 8px; padding: 12px 16px; font-size: 14px; margin: 14px 0;
+}
+.tip b, .warn b { color: var(--ink); }
+
+/* 启动步骤 */
+.steps { counter-reset: step; display: grid; gap: 14px; }
+.step {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 10px; padding: 16px 18px;
+}
+.step::before {
+  counter-increment: step; content: counter(step);
+  background: var(--seal); color: #fff;
+  width: 30px; height: 30px; border-radius: 50%; flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 15px;
+}
+.step .body { flex: 1; }
+.step .body b { display: block; margin-bottom: 4px; font-size: 15px; }
+.step .body span { color: var(--muted); font-size: 14px; }
+
+/* 模拟实际文件 */
+.file-btn {
+  display: inline-block; background: var(--seal); color: #fff;
+  padding: 3px 12px; border-radius: 7px; font-weight: 600; font-size: 14px;
+}
+code, .kbd {
+  background: var(--paper); border: 1px solid var(--line); border-radius: 5px;
+  padding: 1px 7px; font-family: Consolas, "Courier New", monospace;
+  font-size: 13px;
+}
+pre {
+  background: #2b2820; color: #e8e2d2; border-radius: 10px;
+  padding: 14px 18px; overflow-x: auto;
+  font-family: Consolas, "Courier New", monospace; font-size: 13.5px;
+  line-height: 1.7;
+}
+pre code { background: none; border: 0; padding: 0; color: inherit; }
+
+/* 目录导读表 */
+table {
+  width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 4px;
+}
+th, td {
+  border: 1px solid var(--line); padding: 9px 12px;
+  text-align: left; vertical-align: top;
+}
+th { background: var(--paper); font-weight: 600; white-space: nowrap; }
+td .name { font-family: Consolas, monospace; font-weight: 600; }
+td .kind {
+  display: inline-block; font-size: 12px; padding: 1px 8px;
+  border-radius: 999px; border: 1px solid var(--line);
+  color: var(--muted); background: var(--paper); white-space: nowrap;
+}
+td .kind.code { color: var(--seal); border-color: #ecd2c9; background: var(--seal-wash); }
+tr.sub-row td { background: #faf8f2; }
+tr.sub-row td:first-child { padding-left: 28px; }
+
+/* 功能清单 */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } }
+.card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 10px; padding: 16px 18px;
+}
+.card h3 { margin: 0 0 10px; font-size: 15px; }
+.card ul { margin: 0; padding-left: 1.3em; font-size: 14px; color: var(--muted); }
+.card li { margin: 4px 0; }
+
+/* FAQ */
+.faq { border-top: 1px dashed var(--line); padding: 12px 0; }
+.faq:first-of-type { border-top: 0; }
+.faq b { display: block; margin-bottom: 4px; font-size: 14.5px; }
+.faq span { color: var(--muted); font-size: 14px; }
+
+/* 页脚 */
+.foot {
+  text-align: center; color: var(--muted); font-size: 13px;
+  padding-top: 8px;
+}
+.foot a { color: var(--seal); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>墨 刊</h1>
+    <p>个人博客 · 课程验收交付包 —— 不懂技术也能看懂这份说明</p>
+    <span class="badge">Flask + SQLite · 手工实现 · 14 项测试通过</span>
+  </div>
+
+  <!-- ① 项目是什么 -->
+  <section>
+    <h2><span class="num">1</span>这是什么？</h2>
+    <p class="sub">一句话：自己从零写的一个个人博客系统，不是套用现成博客程序。</p>
+    <div class="tip">
+      <b>技术栈：</b>后端 Python / Flask，数据库 SQLite，前端原生 HTML / CSS /
+      JavaScript（无任何前端框架）。代码全部可读，共 5 个 Python 源文件、
+      13 个页面模板、14 个自动化测试。
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>读者端（前台）功能</h3>
+        <ul>
+          <li>首页时间轴刊列，按日期倒序展示文章</li>
+          <li>文章详情：Markdown 渲染 + 代码高亮</li>
+          <li>标签筛选、按年归档、RSS 订阅</li>
+          <li>阅读计数、上一篇 / 下一篇导航</li>
+          <li>深色 / 浅色模式一键切换</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>管理端（后台）功能</h3>
+        <ul>
+          <li>登录鉴权（未登录无法进入后台）</li>
+          <li>文章新建 / 编辑 / 删除</li>
+          <li>草稿与发布状态管理（草稿前台不可见）</li>
+          <li>标签、摘要随文章一起维护</li>
+          <li>会话安全：HttpOnly + SameSite Cookie</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② 怎么跑起来 -->
+  <section>
+    <h2><span class="num">2</span>怎么运行？（三步）</h2>
+    <p class="sub">不需要任何命令行知识，双击即可。</p>
+    <div class="steps">
+      <div class="step">
+        <div class="body">
+          <b>双击 <span class="file-btn">01-【双击开始】.bat</span></b>
+          <span>脚本会自动检查 Python 和依赖，缺什么就装什么。</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="body">
+          <b>等待约 5 秒，浏览器自动打开</b>
+          <span>地址是 http://127.0.0.1:5000 ，看到「墨刊」首页即成功。</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="body">
+          <b>需要管理文章时，访问 /admin 登录后台</b>
+          <span>默认账号：admin / admin123（前台无需登录）。</span>
+        </div>
+      </div>
+    </div>
+    <div class="warn">
+      <b>注意：</b>运行期间的黑色窗口不能关，关闭即停止服务。
+      想停止时在窗口里按 <span class="kbd">Ctrl + C</span>。
+    </div>
+  </section>
+
+  <!-- ③ 目录导读 -->
+  <section>
+    <h2><span class="num">3</span>目录结构导读（每个东西是干嘛的）</h2>
+    <p class="sub">验收时按这张表对照即可，★ 是需要关注的，其余可忽略。</p>
+    <table>
+      <tr><th>名称</th><th>类型</th><th>作用</th></tr>
+      <tr>
+        <td><span class="name">00-【必读】从这里开始.html</span></td>
+        <td><span class="kind">说明页</span></td>
+        <td>★ 你正在看的这份图文说明：介绍、运行方法、目录导读、常见问题。</td>
+      </tr>
+      <tr>
+        <td><span class="name">01-【双击开始】.bat</span></td>
+        <td><span class="kind">启动脚本</span></td>
+        <td>★ 一键启动入口：检查环境 → 装依赖 → 启动服务 → 自动开浏览器。</td>
+      </tr>
+      <tr>
+        <td><span class="name">README.md</span></td>
+        <td><span class="kind">文档</span></td>
+        <td>项目说明文档（偏技术向），同时是 GitHub 仓库首页展示的内容。</td>
+      </tr>
+      <tr>
+        <td><span class="name">app.py</span></td>
+        <td><span class="kind code">代码</span></td>
+        <td>★ 程序入口：双击 01 后实际执行的就是它，负责创建应用并启动服务。</td>
+      </tr>
+      <tr>
+        <td><span class="name">blog/</span></td>
+        <td><span class="kind code">代码包</span></td>
+        <td>★ 全部核心代码都在这个文件夹里（展开见下表）。</td>
+      </tr>
+      <tr class="sub-row"><td><span class="name">blog/__init__.py</span></td><td><span class="kind code">代码</span></td><td>应用工厂：创建应用、装配各模块、注册错误页。</td></tr>
+      <tr class="sub-row"><td><span class="name">blog/models.py</span></td><td><span class="kind code">代码</span></td><td>数据访问层：建表、初始化演示数据、文章增删改查（原生 SQL）。</td></tr>
+      <tr class="sub-row"><td><span class="name">blog/views.py</span></td><td><span class="kind code">代码</span></td><td>前台路由：首页、文章详情、标签、归档、关于、RSS。</td></tr>
+      <tr class="sub-row"><td><span class="name">blog/admin_views.py</span></td><td><span class="kind code">代码</span></td><td>后台路由：登录鉴权 + 文章管理，所有写操作都要先登录。</td></tr>
+      <tr class="sub-row"><td><span class="name">blog/templates/</span></td><td><span class="kind code">模板</span></td><td>10 个前台页面模板 + 3 个后台页面模板（Jinja2 / HTML）。</td></tr>
+      <tr class="sub-row"><td><span class="name">blog/static/</span></td><td><span class="kind code">样式</span></td><td>全站样式 style.css 与代码高亮主题 syntax.css。</td></tr>
+      <tr>
+        <td><span class="name">tests/</span></td>
+        <td><span class="kind">测试</span></td>
+        <td>★ 14 个自动化单元测试：覆盖前台展示、草稿隔离、登录鉴权、增删改查。</td>
+      </tr>
+      <tr>
+        <td><span class="name">instance/</span></td>
+        <td><span class="kind">运行数据</span></td>
+        <td>运行后自动生成的数据库文件。可整个删掉，下次启动会自动重建。</td>
+      </tr>
+      <tr>
+        <td><span class="name">requirements.txt</span></td>
+        <td><span class="kind">配置</span></td>
+        <td>依赖清单：告诉 pip 需要安装哪几个库（仅 3 个）。</td>
+      </tr>
+      <tr>
+        <td><span class="name">.git/  .gitignore</span></td>
+        <td><span class="kind">版本管理</span></td>
+        <td>Git 仓库相关，验收可忽略。代码托管在 GitHub。</td>
+      </tr>
+      <tr>
+        <td><span class="name">.venv/</span></td>
+        <td><span class="kind">环境</span></td>
+        <td>Python 虚拟环境（开发时创建，如存在可忽略，不影响双击运行）。</td>
+      </tr>
+    </table>
+    <div class="tip">
+      <b>记忆要点：</b>看说明翻 <b>00</b>，要运行点 <b>01</b>，
+      看代码进 <b>blog/</b>，跑测试用 <b>tests/</b>，其余都可忽略。
+    </div>
+  </section>
+
+  <!-- ④ 测试 -->
+  <section>
+    <h2><span class="num">4</span>如何验证质量？（运行测试）</h2>
+    <p class="sub">在本文件夹打开命令行（地址栏输入 cmd 回车），执行：</p>
+<pre><code>python -m unittest discover -s tests -t . -v</code></pre>
+    <div class="tip">
+      <b>预期结果：</b>结尾显示 <b>Ran 14 tests</b> 和 <b>OK</b>，
+      14 项全部 passed。测试使用独立的临时数据库，不会影响演示数据。
+    </div>
+  </section>
+
+  <!-- ⑤ FAQ -->
+  <section>
+    <h2><span class="num">5</span>常见问题</h2>
+    <div class="faq">
+      <b>Q：双击后提示「没有检测到 Python 环境」？</b>
+      <span>先到 python.org/downloads 安装 Python 3.9+，安装时务必勾选
+      “Add Python to PATH”，装完重新双击 01。</span>
+    </div>
+    <div class="faq">
+      <b>Q：依赖安装很慢或失败？</b>
+      <span>手动执行：<code>pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple</code>
+      ，完成后重新双击 01。</span>
+    </div>
+    <div class="faq">
+      <b>Q：浏览器打不开页面？</b>
+      <span>先看是不是已经有黑框窗口在运行（避免重复启动）；或等 3 秒按 F5 刷新。
+      仍不行则关闭所有黑框后重新双击 01。</span>
+    </div>
+    <div class="faq">
+      <b>Q：想修改管理员默认密码？</b>
+      <span>删除 instance 文件夹后，设置环境变量 BLOG_ADMIN_PASSWORD 再启动，
+      首次建库时生效。课程演示环境保持默认即可。</span>
+    </div>
+  </section>
+
+  <!-- ⑥ 交付清单 -->
+  <section>
+    <h2><span class="num">6</span>验收清单</h2>
+    <table>
+      <tr><th>验收项</th><th>在哪里</th></tr>
+      <tr><td>双击即可运行</td><td><span class="file-btn">01-【双击开始】.bat</span></td></tr>
+      <tr><td>图文使用说明</td><td><span class="file-btn">00-【必读】从这里开始.html</span>（本页）</td></tr>
+      <tr><td>设计 / 实现文档</td><td><span class="name">README.md</span>（含技术要点与配置项）</td></tr>
+      <tr><td>核心源码</td><td><span class="name">app.py</span> + <span class="name">blog/</span></td></tr>
+      <tr><td>自动化测试</td><td><span class="name">tests/</span>（14 项，命令见第 4 节）</td></tr>
+      <tr><td>在线源码仓库</td><td><a href="https://github.com/2683260082/flask-blog">github.com/2683260082/flask-blog</a></td></tr>
+    </table>
+  </section>
+
+  <p class="foot">
+    墨刊 · 个人博客 —— Flask 手工实现<br>
+    如有疑问，优先看本页；技术细节见 README.md
+  </p>
+
+</div>
+</body>
+</html>

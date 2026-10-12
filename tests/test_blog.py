@@ -51,7 +51,7 @@ class BlogTestCase(unittest.TestCase):
     def test_draft_is_404_on_front(self):
         # 种子数据最后一 id 为草稿
         with app_module.app.app_context():
-            import models
+            from blog import models
             row = models.get_db().execute(
                 "SELECT id FROM posts WHERE status = 'draft'"
             ).fetchone()
@@ -140,7 +140,7 @@ class BlogTestCase(unittest.TestCase):
         self.assertIn("文章已创建", resp.get_data(as_text=True))
 
         with app_module.app.app_context():
-            import models
+            from blog import models
             post_id = models.get_db().execute(
                 "SELECT id FROM posts WHERE title = ?", ("测试文章",)
             ).fetchone()["id"]

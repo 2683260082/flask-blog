@@ -17,19 +17,22 @@ flask-blog/
 ├── 00-【必读】从这里开始.html    # 图文使用说明（验收入口）
 ├── 01-【双击开始】.bat           # 一键启动脚本
 ├── README.md                     # 本说明文档
-└── 02-项目源码/                  # 全部源码与运行数据
-    ├── app.py                    # 启动入口: python app.py
-    ├── blog/                     # 应用包 (全部业务代码)
-    │   ├── __init__.py           # 应用工厂、Markdown 过滤器、蓝图装配
-    │   ├── models.py             # 数据访问层 (建表、种子、文章 CRUD)
-    │   ├── views.py              # 前台蓝图 (首页/详情/标签/归档/RSS)
-    │   ├── admin_views.py        # 后台蓝图 (登录、文章管理)
-    │   ├── templates/            # 页面模板 (含 admin/ 子目录)
-    │   └── static/               # 全站样式 + Pygments 高亮主题
-    ├── tests/                    # 单元测试
-    ├── instance/                 # 运行时数据库 (自动生成, 不入库)
-    ├── requirements.txt          # 依赖清单
-    └── .gitignore
+├── 02-项目源码/                  # 全部源码与运行数据
+│   ├── app.py                    # 启动入口: python app.py
+│   ├── blog/                     # 应用包 (全部业务代码)
+│   │   ├── __init__.py           # 应用工厂、Markdown 过滤器、蓝图装配
+│   │   ├── models.py             # 数据访问层 (建表、种子、文章 CRUD)
+│   │   ├── views.py              # 前台蓝图 (首页/详情/标签/归档/RSS)
+│   │   ├── admin_views.py        # 后台蓝图 (登录、文章管理)
+│   │   ├── templates/            # 页面模板 (含 admin/ 子目录)
+│   │   └── static/               # 全站样式 + Pygments 高亮主题
+│   ├── tests/                    # 单元测试
+│   ├── instance/                 # 运行时数据库 (自动生成, 不入库)
+│   ├── requirements.txt          # 依赖清单
+│   └── .gitignore
+└── 03-安装包/                    # 交付安装包: 断网也能装
+    ├── python-3.11.9-amd64.exe   # Python 官方安装包 (没 Python 时双击它)
+    └── wheels/                   # 依赖离线包 (双击脚本自动优先使用)
 ```
 
 ## 快速开始
@@ -38,6 +41,10 @@ flask-blog/
 
 双击根目录的 `01-【双击开始】.bat`，会自动检查环境、安装依赖并打开浏览器。
 完整图文说明（含目录导读、常见问题）见 `00-【必读】从这里开始.html`。
+
+电脑没装 Python？双击 `03-安装包\python-3.11.9-amd64.exe` 先装 Python
+（安装时勾选 **Add Python to PATH**），再双击 01。装依赖时脚本会优先用
+`03-安装包\wheels` 离线安装——断网也能装好。
 
 **方式二：命令行**
 
